@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="a36c2d44-09d0-4aee-8995-6d97a5d2b54f" name="formhandlers (Local)" url="http://formhandlers.test">
+        <fileTransfer port="0" mountedRoot="C:\inetpub\wwwroot-formhandlers" accessType="MOUNT" />
+      </webServer>
+    </option>
+  </component>
+</project>

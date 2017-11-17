@@ -79,12 +79,9 @@ $body .= formTable();
 
 /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- */
 
-// Testing.k
+// Testing
 
-print("To: ${to}<br>");
-print("Subject: ${subject}<br>");
-print("Headers: ${headers}");
-print("Body: ${body}<br>");
+debug($to, $subject, $headers, $body);
 
 //$sent = mail($to, $subject, $body, $headers);
 //
@@ -115,4 +112,14 @@ function formTable() {
 	}
 
 	return $html;
+}
+
+function debug($to, $subject, $headers, $body) {
+	print('<style>');
+	print('</style>');
+	print("<div>To: <strong>${to}</strong></div>");
+	print("<div>Subject: <strong>${subject}</strong></div>");
+	print("<div>Headers: <strong>${headers}</strong></div>");
+	print("<div>Body</div>");
+	print("<div>${body}</div>");
 }
