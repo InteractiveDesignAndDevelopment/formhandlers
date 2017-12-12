@@ -2,6 +2,8 @@
 <html>
 	<head>
 
+        <title>Test</title>
+
         <link
             rel="stylesheet"
             href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
@@ -24,27 +26,30 @@
 		<script>
             (function() {
                 let action, form,
-                    configBcc, configCc, configReplyTo, configSubject, configTo,
+                    configBcc, configCc, configDebug, configReplyTo, configSubject, configTo,
                     hiddenBcc, hiddenCc, hiddenReplyTo, hiddenSubject;
 
                 document.addEventListener('DOMContentLoaded', function() {
                     action        = document.getElementById('action');
                     configBcc     = document.getElementById('config-bcc');
                     configCc      = document.getElementById('config-cc');
+                    configDebug   = document.getElementById('config-debug');
                     configReplyTo = document.getElementById('config-replyto');
                     configSubject = document.getElementById('config-subject');
                     configTo      = document.getElementById('config-to');
-                    hiddenBcc     = document.getElementById('config-bcc');
-                    hiddenCc      = document.getElementById('config-cc');
-                    hiddenReplyTo = document.getElementById('config-replyto');
-                    hiddenSubject = document.getElementById('config-subject');
+                    hiddenBcc     = document.getElementById('hidden-bcc');
+                    hiddenCc      = document.getElementById('hidden-cc');
+                    hiddenDebug   = document.getElementById('hidden-debug');
+                    hiddenReplyTo = document.getElementById('hidden-replyto');
+                    hiddenSubject = document.getElementById('hidden-subject');
                     form          = document.getElementById('form');
 
-                    configBcc.addEventListener(     'keyup', updateForm);
-                    configCc.addEventListener(      'keyup', updateForm);
-                    configReplyTo.addEventListener( 'keyup', updateForm);
-                    configSubject.addEventListener( 'keyup', updateForm);
-                    configTo.addEventListener(      'keyup', updateForm);
+                    configBcc.addEventListener(     'keyup',  updateForm);
+                    configCc.addEventListener(      'keyup',  updateForm);
+                    configDebug.addEventListener(   'change', updateForm);
+                    configReplyTo.addEventListener( 'keyup',  updateForm);
+                    configSubject.addEventListener( 'keyup',  updateForm);
+                    configTo.addEventListener(      'keyup',  updateForm);
 
                     updateForm();
                 });
@@ -52,6 +57,12 @@
                 function updateForm() {
                     let emailTo = configTo.value;
                     let url = `/${emailTo}`;
+
+                    if (null !== document.querySelector('#config-debug:checked')) {
+                        hiddenDebug.value = 'true';
+                    } else {
+                        hiddenDebug.value = 'false';
+                    }
 
                     form.setAttribute('action', url);
 
@@ -77,22 +88,28 @@
 
                     <h2>Configuration</h2>
 
-                    <form class="form-group">
+                    <form>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" id="config-debug" type="checkbox">
+                                Debug
+                            </label>
+                        </div>
                         <div class="form-group">
                             <label for="to">To</label>
-                            <input class="form-control" id="config-to" type="text">
+                            <input class="form-control" id="config-to" type="email">
                         </div>
                         <div class="form-group">
                             <label>Reply To</label>
-                            <input class="form-control" id="config-replyto" type="text">
+                            <input class="form-control" id="config-replyto" type="email">
                         </div>
                         <div class="form-group">
                             <label>CC</label>
-                            <input class="form-control" id="config-cc" type="text">
+                            <input class="form-control" id="config-cc" type="email">
                         </div>
                         <div class="form-group">
                             <label>BCC</label>
-                            <input class="form-control" id="config-bcc" type="text">
+                            <input class="form-control" id="config-bcc" type="email">
                         </div>
                         <div class="form-group">
                             <label>Subject</label>
@@ -127,8 +144,9 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="">select-1</label>
+                            <label for="">Select 1</label>
                             <select class="form-control" name="select-1">
+                                <option value=""></option>
                                 <option>Option 1</option>
                                 <option>Option 2</option>
                                 <option>Option 3</option>
@@ -141,11 +159,12 @@
                             <input class="btn btn-primary" type="submit" value="Submit">
                         </div>
 
-                        <input type="hidden" name="*replyto"  id="hidden-replyto" value="">
-                        <input type="hidden" name="*cc"       id="hidden-cc" value="">
-                        <input type="hidden" name="*bcc"      id="hidden-bcc" value="">
-                        <input type="hidden" name="*subject"  id="hidden-subject" value="">
+                        <input type="hidden" name="*replyto"  id="hidden-replyto"  value="">
+                        <input type="hidden" name="*cc"       id="hidden-cc"       value="">
+                        <input type="hidden" name="*bcc"      id="hidden-bcc"      value="">
+                        <input type="hidden" name="*subject"  id="hidden-subject"  value="">
                         <input type="hidden" name="*formname" id="hidden-formname" value="">
+                        <input type="hidden" name="*debug"    id="hidden-debug"    value="">
 
                     </form>
 

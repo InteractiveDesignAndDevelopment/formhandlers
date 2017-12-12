@@ -3,7 +3,10 @@
   <component name="WebServers">
     <option name="servers">
       <webServer id="a36c2d44-09d0-4aee-8995-6d97a5d2b54f" name="formhandlers (Local)" url="http://formhandlers.test">
-        <fileTransfer port="0" mountedRoot="C:\inetpub\wwwroot-formhandlers" accessType="MOUNT" />
+        <fileTransfer port="0" accessType="LOCAL" />
+      </webServer>
+      <webServer id="4ddcd855-6190-432e-a97e-06c2643ebbad" name="formhandlers (Chewbacca)" url="http://formhandlers.mercer.edu">
+        <fileTransfer port="0" mountedRoot="\\chewbacca\c$\InetpubFormHandlers\wwwroot" accessType="MOUNT" />
       </webServer>
     </option>
   </component>

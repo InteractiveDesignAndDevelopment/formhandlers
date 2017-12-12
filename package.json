@@ -1,0 +1,19 @@
+{
+  "name": "formhandlers",
+  "version": "1.0.0",
+  "description": "Email form response summary emails.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/InteractiveDesignAndDevelopment/formhandlers.git"
+  },
+  "author": "Interactive Design & Development",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/InteractiveDesignAndDevelopment/formhandlers/issues"
+  },
+  "homepage": "https://github.com/InteractiveDesignAndDevelopment/formhandlers#readme"
+}

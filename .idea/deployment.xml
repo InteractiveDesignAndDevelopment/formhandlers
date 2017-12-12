@@ -9,6 +9,18 @@
           </mappings>
         </serverdata>
       </paths>
+      <paths name="formhandlers (Chewbacca)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+          <excludedPaths>
+            <excludedPath local="true" path="$PROJECT_DIR$/WEB-INF" />
+            <excludedPath local="true" path="$PROJECT_DIR$/LICENSE" />
+            <excludedPath local="true" path="$PROJECT_DIR$/.gitignore" />
+          </excludedPaths>
+        </serverdata>
+      </paths>
       <paths name="formhandlers (Local)">
         <serverdata>
           <mappings>
