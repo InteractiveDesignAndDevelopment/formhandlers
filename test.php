@@ -25,31 +25,37 @@
 
 		<script>
             (function() {
+                'use strict';
+
                 let action, form,
-                    configBcc, configCc, configDebug, configReplyTo, configSubject, configTo,
-                    hiddenBcc, hiddenCc, hiddenReplyTo, hiddenSubject;
+                    configTo,
+                    configBcc, configCc, configDebug, configHoneypot, configReplyTo, configSubject,
+                    hiddenBcc, hiddenCc, hiddenDebug, hiddenHoneypot, hiddenReplyTo, hiddenSubject;
 
                 document.addEventListener('DOMContentLoaded', function() {
-                    action        = document.getElementById('action');
-                    configBcc     = document.getElementById('config-bcc');
-                    configCc      = document.getElementById('config-cc');
-                    configDebug   = document.getElementById('config-debug');
-                    configReplyTo = document.getElementById('config-replyto');
-                    configSubject = document.getElementById('config-subject');
-                    configTo      = document.getElementById('config-to');
-                    hiddenBcc     = document.getElementById('hidden-bcc');
-                    hiddenCc      = document.getElementById('hidden-cc');
-                    hiddenDebug   = document.getElementById('hidden-debug');
-                    hiddenReplyTo = document.getElementById('hidden-replyto');
-                    hiddenSubject = document.getElementById('hidden-subject');
-                    form          = document.getElementById('form');
+                    action         = document.getElementById('action');
+                    configBcc      = document.getElementById('config-bcc');
+                    configCc       = document.getElementById('config-cc');
+                    configDebug    = document.getElementById('config-debug');
+                    configHoneypot = document.getElementById('config-honeypot');
+                    configReplyTo  = document.getElementById('config-replyto');
+                    configSubject  = document.getElementById('config-subject');
+                    configTo       = document.getElementById('config-to');
+                    hiddenBcc      = document.getElementById('hidden-bcc');
+                    hiddenCc       = document.getElementById('hidden-cc');
+                    hiddenDebug    = document.getElementById('hidden-debug');
+                    hiddenHoneypot = document.getElementById('hidden-honeypot');
+                    hiddenReplyTo  = document.getElementById('hidden-replyto');
+                    hiddenSubject  = document.getElementById('hidden-subject');
+                    form           = document.getElementById('form');
 
-                    configBcc.addEventListener(     'keyup',  updateForm);
-                    configCc.addEventListener(      'keyup',  updateForm);
-                    configDebug.addEventListener(   'change', updateForm);
-                    configReplyTo.addEventListener( 'keyup',  updateForm);
-                    configSubject.addEventListener( 'keyup',  updateForm);
-                    configTo.addEventListener(      'keyup',  updateForm);
+                    configBcc.addEventListener(     ' keyup',  updateForm);
+                    configCc.addEventListener(      ' keyup',  updateForm);
+                    configDebug.addEventListener(    'change', updateForm);
+                    configHoneypot.addEventListener( 'keyup',  updateForm);
+                    configReplyTo.addEventListener(  'keyup',  updateForm);
+                    configSubject.addEventListener(  'keyup',  updateForm);
+                    configTo.addEventListener(       'keyup',  updateForm);
 
                     updateForm();
                 });
@@ -58,18 +64,19 @@
                     let emailTo = configTo.value;
                     let url = `/${emailTo}`;
 
+                    form.setAttribute('action', url);
+
                     if (null !== document.querySelector('#config-debug:checked')) {
                         hiddenDebug.value = 'true';
                     } else {
                         hiddenDebug.value = 'false';
                     }
 
-                    form.setAttribute('action', url);
-
-                    hiddenBcc.value     = configBcc.value;
-                    hiddenCc.value      = configCc.value;
-                    hiddenReplyTo.value = configReplyTo.value;
-                    hiddenSubject.value = configSubject.value;
+                    hiddenBcc.value      = configBcc.value;
+                    hiddenCc.value       = configCc.value;
+                    hiddenHoneypot.value = configHoneypot.value;
+                    hiddenReplyTo.value  = configReplyTo.value;
+                    hiddenSubject.value  = configSubject.value;
 
                     action.innerText = url;
                 }
@@ -119,6 +126,10 @@
                             <label>Form Name</label>
                             <input class="form-control" id="config-formname" type="text">
                         </div>
+                        <div class="form-group">
+                            <label>Honeypot</label>
+                            <input class="form-control" id="config-honeypot" type="text">
+                        </div>
                     </form>
 
                 </div>
@@ -159,12 +170,14 @@
                             <input class="btn btn-primary" type="submit" value="Submit">
                         </div>
 
-                        <input type="hidden" name="*replyto"  id="hidden-replyto"  value="">
-                        <input type="hidden" name="*cc"       id="hidden-cc"       value="">
+
                         <input type="hidden" name="*bcc"      id="hidden-bcc"      value="">
-                        <input type="hidden" name="*subject"  id="hidden-subject"  value="">
-                        <input type="hidden" name="*formname" id="hidden-formname" value="">
+                        <input type="hidden" name="*cc"       id="hidden-cc"       value="">
                         <input type="hidden" name="*debug"    id="hidden-debug"    value="">
+                        <input type="hidden" name="*formname" id="hidden-formname" value="">
+                        <input type="hidden" name="*honeypot" id="hidden-honeypot" value="">
+                        <input type="hidden" name="*subject"  id="hidden-subject"  value="">
+                        <input type="hidden" name="*replyto"  id="hidden-replyto"  value="">
 
                     </form>
 

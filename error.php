@@ -1,13 +1,24 @@
 <?php
 
 /*
- * Error Codes:
- * no-to
- * not-https
- * not-post
+ * Error Codes
+ * ===========
+ * - honeypot
+ * - no-to
+ * - not-https
+ * - not-post
+ * - not-sent
  */
 
 switch ($_GET['error-code']) {
+    case 'honeypot':
+        $title = 'Honeypot has a value';
+        $description = <<<EOD
+            <p>
+                The honeypot should not be filled in.
+            </p>
+EOD;
+	    break;
 	case 'no-to':
 		$title = '&ldquoto&rdquo; address missing';
 		$description = <<<EOD
@@ -39,19 +50,19 @@ case 'not-sent':
 			</p>
 EOD;
 		break;
-	case 'spam':
+	case 'to-invalid':
 		$title = 'Probable Spam';
 		$description = <<<EOD
 			<p>
-				This looked too much like spam.
+				Invalid &ldquo;to&rdquo; address.
 			</p>
 EOD;
 		break;
 	default:
-		$title = 'Unspecified error';
+		$title = 'Unrecognized error';
 		$description = <<<EOD
 			<p>
-				An unspecified error occurred. Check the logs.
+				That error code is not recognized.
 			</p>
 EOD;
 }
@@ -61,11 +72,11 @@ EOD;
 <!doctype html>
 <html>
 	<head>
-		<title>Error: <?php $title ?></title>
+		<title><?php print $title ?></title>
 	</head>
 	<body>
 
-		<?php echo $description ?>
+		<?php print $description ?>
 
 	</body>
 </html>

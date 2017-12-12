@@ -1,28 +1,24 @@
 <?php
 
+//   ____             __ _
+//  / ___|___  _ __  / _(_) __ _
+// | |   / _ \| '_ \| |_| |/ _` |
+// | |__| (_) | | | |  _| | (_| |
+//  \____\___/|_| |_|_| |_|\__, |
+//                         |___/
+
+// Requests must be secure, except for these domains
 $insecureDomains = ['formhandlers.test'];
 
 /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- */
 
-// Requests must be secure, except for whitelisted insecure domains
-if ('off' == $_SERVER['HTTPS'] && ! in_array($_SERVER['HTTP_HOST'], $insecureDomains)) {
-	header('Location: /error.php?error-code=not-https');
-	die();
-}
-
-// Requests must use the POST verb
-if ('POST' != $_SERVER['REQUEST_METHOD']) {
-	header('Location: /error.php?error-code=not-post');
-	die();
-}
-
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- */
+// __     __         _       _     _
+// \ \   / /_ _ _ __(_) __ _| |__ | | ___  ___
+//  \ \ / / _` | '__| |/ _` | '_ \| |/ _ \/ __|
+//   \ V / (_| | |  | | (_| | |_) | |  __/\__ \
+//    \_/ \__,_|_|  |_|\__,_|_.__/|_|\___||___/
 
 //var_dump($_SERVER);
-
-$explodedURI = explode('/', $_SERVER['REQUEST_URI']);
-
-//var_dump($explodedURI);
 
 if (isset($_POST['*debug'])) {
 	$debug = filter_var($_POST['*debug'], FILTER_VALIDATE_BOOLEAN);
@@ -30,10 +26,12 @@ if (isset($_POST['*debug'])) {
 	$debug = false;
 }
 
-$to = trim( $explodedURI[1] );
+$explodedURI = explode('/', $_SERVER['REQUEST_URI']);
 
-if (0 == strlen($to)) {
-	header('Location: /error.php?error-code=no-to');
+//var_dump($explodedURI);
+
+if (2 == count($explodedURI)) {
+	$to = trim( $explodedURI[1] );
 }
 
 $headers = '';
@@ -41,33 +39,88 @@ $body = '';
 
 if (isset($_POST['*bcc'])) {
 	$bcc = trim($_POST['*bcc']);
+} else if (isset($_POST['_bcc'])) {
+	$bcc = trim($_POST['_bcc']);
 }
 
 if (isset($_POST['*cc'])) {
 	$cc = trim( $_POST['*cc'] );
+} else if (isset($_POST['_cc'])) {
+	$cc = trim( $_POST['_cc'] );
 }
 
 if (isset($_POST['*formname'])) {
 	$formName = trim( $_POST['*formname'] );
+} else if (isset($_POST['_formname'])) {
+	$formName = trim( $_POST['_formname'] );
 }
 
 if (isset($_POST['*honeypot'])) {
 	$honeypot = trim( $_POST['*honeypot'] );
+} else if (isset($_POST['_honeypot'])) {
+	$honeypot = trim( $_POST['_honeypot'] );
+} else if (isset($_POST['*gotcha'])) {
+	$honeypot = trim( $_POST['*gotcha'] );
+} else if (isset($_POST['_gotcha'])) {
+	$honeypot = trim( $_POST['_gotcha'] );
 }
 
 if (isset($_POST['*redirect'])) {
 	$redirect = trim( $_POST['*redirect'] );
+} else if (isset($_POST['_redirect'])) {
+	$redirect = trim( $_POST['_redirect'] );
 }
 
 if (isset($_POST['*replyto'])) {
 	$replyTo = trim( $_POST['*replyto'] );
+} else if (isset($_POST['_replyto'])) {
+	$replyTo = trim( $_POST['_replyto'] );
 }
 
 if (isset($_POST['*subject'])) {
 	$subject = trim( $_POST['*subject'] );
+} else if (isset($_POST['_subject'])) {
+	$subject = trim( $_POST['_subject'] );
 }
 
 /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- */
+
+// __     __    _ _     _       _   _
+// \ \   / /_ _| (_) __| | __ _| |_(_) ___  _ __
+//  \ \ / / _` | | |/ _` |/ _` | __| |/ _ \| '_ \
+//   \ V / (_| | | | (_| | (_| | |_| | (_) | | | |
+//    \_/ \__,_|_|_|\__,_|\__,_|\__|_|\___/|_| |_|
+
+// The email has to go somewhere
+if (! isset($to) || 0 == strlen($to)) {
+	die(header('Location: /error.php?error-code=no-to'));
+}
+
+if (! filter_var($to, FILTER_VALIDATE_EMAIL)) {
+	die(header('Location: /error.php?error-code=to-invalid'));
+}
+
+// Requests must be secure, except for whitelisted domains
+if ('off' == $_SERVER['HTTPS'] && ! in_array($_SERVER['HTTP_HOST'], $insecureDomains)) {
+	die(header('Location: /error.php?error-code=not-https'));
+}
+
+// Requests must use the POST verb
+if ('POST' != $_SERVER['REQUEST_METHOD']) {
+	die(header('Location: /error.php?error-code=not-post'));
+}
+
+if (isset($honeypot) && 0 < strlen($honeypot)) {
+	die(header('Location: /error.php?error-code=honeypot'));
+}
+
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- */
+
+//  ____        _ _     _   _____                 _ _
+// | __ ) _   _(_) | __| | | ____|_ __ ___   __ _(_) |
+// |  _ \| | | | | |/ _` | |  _| | '_ ` _ \ / _` | | |
+// | |_) | |_| | | | (_| | | |___| | | | | | (_| | | |
+// |____/ \__,_|_|_|\__,_| |_____|_| |_| |_|\__,_|_|_|
 
 // To
 
@@ -111,6 +164,13 @@ $body .= emailBody();
 
 /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- */
 
+//  ____                 _   _____                 _ _
+// / ___|  ___ _ __   __| | | ____|_ __ ___   __ _(_) |
+// \___ \ / _ \ '_ \ / _` | |  _| | '_ ` _ \ / _` | | |
+//  ___) |  __/ | | | (_| | | |___| | | | | | (_| | | |
+// |____/ \___|_| |_|\__,_| |_____|_| |_| |_|\__,_|_|_|
+
+
 if ($debug) {
 	print(emailBody());
 } else {
@@ -128,10 +188,25 @@ if ($debug) {
 	}
 }
 
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- */
+
+//  _   _           _       _         ____        _        _
+// | | | |_ __   __| | __ _| |_ ___  |  _ \  __ _| |_ __ _| |__   __ _ ___  ___
+// | | | | '_ \ / _` |/ _` | __/ _ \ | | | |/ _` | __/ _` | '_ \ / _` / __|/ _ \
+// | |_| | |_) | (_| | (_| | ||  __/ | |_| | (_| | || (_| | |_) | (_| \__ \  __/
+//  \___/| .__/ \__,_|\__,_|\__\___| |____/ \__,_|\__\__,_|_.__/ \__,_|___/\___|
+//       |_|
+
 $submissionId = recordSubmission();
 recordFields($submissionId);
 
 /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- */
+
+//  _____                 _   _
+// |  ___|   _ _ __   ___| |_(_) ___  _ __  ___
+// | |_ | | | | '_ \ / __| __| |/ _ \| '_ \/ __|
+// |  _|| |_| | | | | (__| |_| | (_) | | | \__ \
+// |_|   \__,_|_| |_|\___|\__|_|\___/|_| |_|___/
 
 function dbName() {
 	if ('formhandlers.test' == $_SERVER['HTTP_HOST']) {
@@ -283,9 +358,9 @@ function recordFields($submissionId) {
 					name,
 					value
 				) VALUES (
-					?,
-					?,
-					?
+					?,  -- submission_id
+					?,  -- name
+					?   -- value
 				);
 EOQUERY;
 
