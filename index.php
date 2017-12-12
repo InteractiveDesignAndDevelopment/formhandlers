@@ -93,29 +93,33 @@ if (isset($_POST['*subject'])) {
 
 // The email has to go somewhere
 if (! isset($to) || 0 == strlen($to)) {
-	header('Location: /error.php?error-code=no-to');
-	die();
+	$errorCode = 'no-to';
 }
 
 if (! filter_var($to, FILTER_VALIDATE_EMAIL)) {
-	header('Location: /error.php?error-code=to-invalid');
-	die();
+	$errorCode = 'to-invalid';
 }
 
 // Requests must be secure, except for whitelisted domains
 if ('off' == $_SERVER['HTTPS'] && ! in_array($_SERVER['HTTP_HOST'], $insecureDomains)) {
-	header('Location: /error.php?error-code=not-https');
-	die();
+	$errorCode = 'not-https';
 }
 
 // Requests must use the POST verb
 if ('POST' != $_SERVER['REQUEST_METHOD']) {
-	header('Location: /error.php?error-code=not-post');
-	die();
+	$errorCode = 'not-post';
 }
 
 if (isset($honeypot) && 0 < strlen($honeypot)) {
-	header('Location: /error.php?error-code=honeypot');
+	$errorCode = 'honeypot';
+}
+
+if (isset($errorCode) && 0 < strlen($errorCode)) {
+	$redirect = "/error.php?error-code=${errorCode}";
+	if (isset($_SERVER['HTTP_REFERER'])) {
+		$redirect .= "&submission-referrer=${_SERVER['HTTP_REFERER']}";
+	}
+	header("Location: ${redirect}");
 	die();
 }
 
@@ -183,7 +187,11 @@ if ($debug) {
 //	echo "${sent} = mail(${to}, ${subject}, ..., ${headers});";
 
 	if (! $sent) {
-		header('Location: /error.php?error-code=not-sent');
+		$redirect = '/error.php?error-code=not-sent';
+		if (isset($_SERVER['HTTP_REFERER'])) {
+			$redirect .= "&submission-referrer=${_SERVER['HTTP_REFERER']}";
+		}
+		header("Location: ${redirect}");
 		die();
 	}
 }
