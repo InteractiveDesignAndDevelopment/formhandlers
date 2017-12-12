@@ -93,25 +93,30 @@ if (isset($_POST['*subject'])) {
 
 // The email has to go somewhere
 if (! isset($to) || 0 == strlen($to)) {
-	die(header('Location: /error.php?error-code=no-to'));
+	header('Location: /error.php?error-code=no-to');
+	die();
 }
 
 if (! filter_var($to, FILTER_VALIDATE_EMAIL)) {
-	die(header('Location: /error.php?error-code=to-invalid'));
+	header('Location: /error.php?error-code=to-invalid');
+	die();
 }
 
 // Requests must be secure, except for whitelisted domains
 if ('off' == $_SERVER['HTTPS'] && ! in_array($_SERVER['HTTP_HOST'], $insecureDomains)) {
-	die(header('Location: /error.php?error-code=not-https'));
+	header('Location: /error.php?error-code=not-https');
+	die();
 }
 
 // Requests must use the POST verb
 if ('POST' != $_SERVER['REQUEST_METHOD']) {
-	die(header('Location: /error.php?error-code=not-post'));
+	header('Location: /error.php?error-code=not-post');
+	die();
 }
 
 if (isset($honeypot) && 0 < strlen($honeypot)) {
-	die(header('Location: /error.php?error-code=honeypot'));
+	header('Location: /error.php?error-code=honeypot');
+	die();
 }
 
 /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- */
@@ -177,14 +182,9 @@ if ($debug) {
 	$sent = mail($to, $subject, emailBody(), $headers);
 //	echo "${sent} = mail(${to}, ${subject}, ..., ${headers});";
 
-	if ($sent) {
-		if (isset($redirect)) {
-			header("Location: ${redirect}");
-		} else {
-			header('Location: /thanks.php');
-		}
-	} else {
+	if (! $sent) {
 		header('Location: /error.php?error-code=not-sent');
+		die();
 	}
 }
 
@@ -199,6 +199,32 @@ if ($debug) {
 
 $submissionId = recordSubmission();
 recordFields($submissionId);
+
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- */
+
+//  ____          _ _               _
+// |  _ \ ___  __| (_)_ __ ___  ___| |_
+// | |_) / _ \/ _` | | '__/ _ \/ __| __|
+// |  _ <  __/ (_| | | | |  __/ (__| |_
+// |_| \_\___|\__,_|_|_|  \___|\___|\__|
+
+if (! isset($redirect)) {
+	$redirect = '/thanks.php';
+	if (isset($_SERVER['HTTP_REFERER'])) {
+		$redirect .= "?submission-referrer=${_SERVER['HTTP_REFERER']}";
+	}
+}
+
+if ($debug) {
+	echo <<<EOHTML
+		<div style="background-color: #0f4084; color: #fff; padding: 1rem;">
+			Redirect: <a href="${redirect}" style="color: #fff;">${redirect}</a>
+		</div>
+EOHTML;
+} else {
+	header("Location: ${redirect}");
+	die();
+}
 
 /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- */
 
