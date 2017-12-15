@@ -7,10 +7,6 @@
 
 ## Config Fields
 
-### \*debug
-
-A truthy or falsy value
-
 ### \*bcc
 
 _Blind Carbon Copy_
@@ -21,6 +17,10 @@ emails send to addresses in `to` or `cc`
 
 _Carbon Copy_  
 Send a copy of the email here
+
+### \*debug
+
+A truthy or falsy value
 
 ### \*formname
 
