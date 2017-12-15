@@ -29,8 +29,8 @@
 
                 let action, form,
                     configTo,
-                    configBcc, configCc, configDebug, configHoneypot, configReplyTo, configSubject,
-                    hiddenBcc, hiddenCc, hiddenDebug, hiddenHoneypot, hiddenReplyTo, hiddenSubject;
+                    configBcc, configCc, configDebug, configHoneypot, configRedirect, configReplyTo, configSubject,
+                    hiddenBcc, hiddenCc, hiddenDebug, hiddenHoneypot, hiddenRedirect, hiddenReplyTo, hiddenSubject;
 
                 document.addEventListener('DOMContentLoaded', function() {
                     action         = document.getElementById('action');
@@ -38,6 +38,7 @@
                     configCc       = document.getElementById('config-cc');
                     configDebug    = document.getElementById('config-debug');
                     configHoneypot = document.getElementById('config-honeypot');
+                    configRedirect = document.getElementById('config-redirect');
                     configReplyTo  = document.getElementById('config-replyto');
                     configSubject  = document.getElementById('config-subject');
                     configTo       = document.getElementById('config-to');
@@ -45,6 +46,7 @@
                     hiddenCc       = document.getElementById('hidden-cc');
                     hiddenDebug    = document.getElementById('hidden-debug');
                     hiddenHoneypot = document.getElementById('hidden-honeypot');
+                    hiddenRedirect = document.getElementById('hidden-redirect');
                     hiddenReplyTo  = document.getElementById('hidden-replyto');
                     hiddenSubject  = document.getElementById('hidden-subject');
                     form           = document.getElementById('form');
@@ -53,6 +55,7 @@
                     configCc.addEventListener(      ' keyup',  updateForm);
                     configDebug.addEventListener(    'change', updateForm);
                     configHoneypot.addEventListener( 'keyup',  updateForm);
+                    configRedirect.addEventListener( 'keyup',  updateForm);
                     configReplyTo.addEventListener(  'keyup',  updateForm);
                     configSubject.addEventListener(  'keyup',  updateForm);
                     configTo.addEventListener(       'keyup',  updateForm);
@@ -75,6 +78,7 @@
                     hiddenBcc.value      = configBcc.value;
                     hiddenCc.value       = configCc.value;
                     hiddenHoneypot.value = configHoneypot.value;
+                    hiddenRedirect.value = configRedirect.value;
                     hiddenReplyTo.value  = configReplyTo.value;
                     hiddenSubject.value  = configSubject.value;
 
@@ -96,40 +100,80 @@
                     <h2>Configuration</h2>
 
                     <form>
+
+                        <h3>Testing</h3>
+
+                        <em>Check this to not send the email, just see it in the browser</em>
+
                         <div class="form-check">
                             <label class="form-check-label">
                                 <input class="form-check-input" id="config-debug" type="checkbox">
                                 Debug
                             </label>
                         </div>
+
+                        <hr>
+
+                        <h3>Required</h3>
+
+                        <em>For testing purposes, it's not actually required</em>
+
                         <div class="form-group">
                             <label for="to">To</label>
                             <input class="form-control" id="config-to" type="email">
                         </div>
-                        <div class="form-group">
-                            <label>Reply To</label>
-                            <input class="form-control" id="config-replyto" type="email">
-                        </div>
-                        <div class="form-group">
-                            <label>CC</label>
-                            <input class="form-control" id="config-cc" type="email">
-                        </div>
-                        <div class="form-group">
-                            <label>BCC</label>
-                            <input class="form-control" id="config-bcc" type="email">
-                        </div>
-                        <div class="form-group">
-                            <label>Subject</label>
-                            <input class="form-control" id="config-subject" type="text">
-                        </div>
+
+                        <hr>
+
+                        <h3>Recommended</h3>
+
+                        <em>These are beneficial in all circumstances</em>
+
                         <div class="form-group">
                             <label>Form Name</label>
                             <input class="form-control" id="config-formname" type="text">
                         </div>
+
+                        <div class="form-group">
+                            <label>Subject</label>
+                            <input class="form-control" id="config-subject" type="text">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Redirect</label>
+                            <input class="form-control" id="config-redirect" type="text">
+                        </div>
+
+                        <hr>
+
+                        <h3>Situational</h3>
+
+                        <em>These are used sometimes</em>
+
+                        <div class="form-group">
+                            <label>BCC</label>
+                            <input class="form-control" id="config-bcc" type="email">
+                        </div>
+
+                        <div class="form-group">
+                            <label>CC</label>
+                            <input class="form-control" id="config-cc" type="email">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Reply To</label>
+                            <input class="form-control" id="config-replyto" type="email">
+                        </div>
+
+                        <h3>Forbidden</h3>
+
+                        <em>Just for testing purposes; any value here will cause an error</em>
+
                         <div class="form-group">
                             <label>Honeypot</label>
                             <input class="form-control" id="config-honeypot" type="text">
                         </div>
+
                     </form>
 
                 </div>
@@ -139,7 +183,7 @@
                     <h2>Test Form</h2>
 
                     <div>
-                        Action: <span id="action"></span>
+                        Action: <span id="action" style="font-family: monospace"></span>
                     </div>
 
                     <form action="" class="form-group" id="form" method="post">
@@ -158,26 +202,56 @@
                             <label for="">Select 1</label>
                             <select class="form-control" name="select-1">
                                 <option value=""></option>
-                                <option>Option 1</option>
-                                <option>Option 2</option>
-                                <option>Option 3</option>
-                                <option>Option 4</option>
-                                <option>Option 5</option>
+                                <option value="select-1-option-1-value">Option 1</option>
+                                <option value="select-1-option-2-value">Option 2</option>
+                                <option value="select-1-option-3-value">Option 3</option>
                             </select>
                         </div>
+
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" type="radio" name="radio-group-1" value="radio-group-1-option-1-value">
+                                Radio Button 1
+                            </label>
+                        </div>
+
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" type="radio" name="radio-group-1" value="radio-group-1-option-2-value">
+                                Radio Button 4
+                            </label>
+                        </div>
+
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" type="radio" name="radio-group-1" value="radio-group-1-option-3-value">
+                                Radio Button 3
+                            </label>
+                        </div>
+
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" type="checkbox" name="checkbox-1" value="checkbox-1-value">
+                                Only if I am ticked, will my value be submitted
+                            </label>
+                        </div>
+
+                        <p class="form-text text-muted">
+                            There are workarounds, but the easiest solution is to just not use checkboxes in forms that submit to formhandlers.
+                        </p>
 
                         <div>
                             <input class="btn btn-primary" type="submit" value="Submit">
                         </div>
-
 
                         <input type="hidden" name="*bcc"      id="hidden-bcc"      value="">
                         <input type="hidden" name="*cc"       id="hidden-cc"       value="">
                         <input type="hidden" name="*debug"    id="hidden-debug"    value="">
                         <input type="hidden" name="*formname" id="hidden-formname" value="">
                         <input type="hidden" name="*honeypot" id="hidden-honeypot" value="">
-                        <input type="hidden" name="*subject"  id="hidden-subject"  value="">
+                        <input type="hidden" name="*redirect" id="hidden-redirect" value="">
                         <input type="hidden" name="*replyto"  id="hidden-replyto"  value="">
+                        <input type="hidden" name="*subject"  id="hidden-subject"  value="">
 
                     </form>
 
