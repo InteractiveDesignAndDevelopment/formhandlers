@@ -99,11 +99,11 @@
 
                     <h2>Configuration</h2>
 
+                    <p>Use the form below to configure the hidden configuration fields in the test form</p>
+
                     <form>
 
                         <h3>Testing</h3>
-
-                        <em>Check this to not send the email, just see it in the browser</em>
 
                         <div class="form-check">
                             <label class="form-check-label">
@@ -112,22 +112,32 @@
                             </label>
                         </div>
 
+                        <p class="form-text text-muted">
+                            If this checkbox is ticked, no email will be sent but the content of the email will be
+                            shown in the browser along with some other useful information.
+                        </p>
+
                         <hr>
 
                         <h3>Required</h3>
-
-                        <em>For testing purposes, it's not actually required</em>
 
                         <div class="form-group">
                             <label for="to">To</label>
                             <input class="form-control" id="config-to" type="email">
                         </div>
 
+                        <p class="form-text text-muted">
+                            For testing purposes, it's not actually required here; an error will be generated if left
+                            blank
+                        </p>
+
                         <hr>
 
                         <h3>Recommended</h3>
 
-                        <em>These are beneficial in all circumstances</em>
+                        <p class="form-text text-muted">
+                            These are beneficial in all circumstances, but no required
+                        </p>
 
                         <div class="form-group">
                             <label>Form Name</label>
@@ -148,7 +158,9 @@
 
                         <h3>Situational</h3>
 
-                        <em>These are used sometimes</em>
+                        <p class="form-text text-muted">
+                            These are used sometimes, but, really, it depends
+                        </p>
 
                         <div class="form-group">
                             <label>BCC</label>
@@ -167,7 +179,9 @@
 
                         <h3>Forbidden</h3>
 
-                        <em>Just for testing purposes; any value here will cause an error</em>
+                        <p class="form-text text-muted">
+                            Only here for testing purposes; any values present will cause an error
+                        </p>
 
                         <div class="form-group">
                             <label>Honeypot</label>
@@ -208,37 +222,63 @@
                             </select>
                         </div>
 
-                        <div class="form-check">
-                            <label class="form-check-label">
-                                <input class="form-check-input" type="radio" name="radio-group-1" value="radio-group-1-option-1-value">
-                                Radio Button 1
-                            </label>
-                        </div>
+                        <fieldset class="form-group">
+                            <legend class="col-form-legend">
+                                Radio Buttons
+                            </legend>
 
-                        <div class="form-check">
-                            <label class="form-check-label">
-                                <input class="form-check-input" type="radio" name="radio-group-1" value="radio-group-1-option-2-value">
-                                Radio Button 4
-                            </label>
-                        </div>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="radio" name="radio-group-1" value="radio-group-1-option-1-value">
+                                    Radio Button 1
+                                </label>
+                            </div>
 
-                        <div class="form-check">
-                            <label class="form-check-label">
-                                <input class="form-check-input" type="radio" name="radio-group-1" value="radio-group-1-option-3-value">
-                                Radio Button 3
-                            </label>
-                        </div>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="radio" name="radio-group-1" value="radio-group-1-option-2-value">
+                                    Radio Button 2
+                                </label>
+                            </div>
 
-                        <div class="form-check">
-                            <label class="form-check-label">
-                                <input class="form-check-input" type="checkbox" name="checkbox-1" value="checkbox-1-value">
-                                Only if I am ticked, will my value be submitted
-                            </label>
-                        </div>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="radio" name="radio-group-1" value="radio-group-1-option-3-value">
+                                    Radio Button 3
+                                </label>
+                            </div>
+                        </fieldset>
 
-                        <p class="form-text text-muted">
-                            There are workarounds, but the easiest solution is to just not use checkboxes in forms that submit to formhandlers.
-                        </p>
+                        <fieldset class="form-group">
+                            <legend class="col-form-legend">
+                                Checkboxes
+                            </legend>
+
+                            <p class="form-text text-muted">
+                                These checkboxes are only here for testing, avoid using them in production
+                            </p>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="checkbox" name="checkbox-1" value="checkbox-1-value">
+                                    Checkbox 1
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="checkbox" name="checkbox-2" value="checkbox-2-value">
+                                    Checkbox 2
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="checkbox" name="checkbox-3" value="checkbox-3-value">
+                                    Checkbox 3
+                                </label>
+                            </div>
+                        </fieldset>
 
                         <div>
                             <input class="btn btn-primary" type="submit" value="Submit">
