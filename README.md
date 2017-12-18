@@ -77,3 +77,5 @@ The subject line of the email
 -   New field `*from`
     -   Set the from header
     -   Currently the PHP default is used
+-   New Field `*thanksmessage`
+    -   The text that will appear on the thanks page
