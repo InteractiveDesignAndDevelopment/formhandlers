@@ -387,7 +387,7 @@ function recordFields($submissionId) {
 			}
 
 			$query = <<< EOQUERY
-				INSERT INTO fields (
+				INSERT INTO formhandlers.dbo.fields (
 					submission_id,
 					name,
 					value
@@ -478,7 +478,7 @@ function recordSubmission() {
 	}
 
 	$query = <<< EOQUERY
-		INSERT INTO submissions (
+		INSERT INTO formhandlers.dbo.submissions (
                 request_uri,
                 http_referer,
                 -- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
