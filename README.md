@@ -1,56 +1,79 @@
 # Form Handlers
 
-## Inspiration
+## Inspirations
 
 -   http://www.enformed.io/setup
 -   https://github.com/formspree/formspree
 
-## Config Fields
+## Form Action Attribute
 
-### \*bcc
+The action attribute contains the email address to which
+summaries of the form submissions are sent.
 
-_Blind Carbon Copy_
-Send a copy of the email here, but don't mention it in
-emails send to addresses in `to` or `cc`
+```html
+<form action="https://url.tld/email@address.tld"></form>
+```
 
-### *cc
+## Hidden Configuration Fields
 
-_Carbon Copy_  
-Send a copy of the email here
+Various other configuration options are set in hidden fields.
 
-### \*debug
+```html
+<form action="https://url.tld/email@address.tld">
+    <input type="hidden" name="*..." value="...">
+    ...
+</form>
+```
 
-A truthy or falsy value
+### \*bcc *&lt;email address[es]&gt;*
 
-### \*formname
+Send a copy of the email to this address, but don't mention
+it in emails sent to other addresses
 
-Helps organize and identify submissions.
+### *cc *&lt;email address[es]&gt;*
 
-### \*gotcha _or_ \*honeypot
+Send a copy of the email to this address
 
-If a value is in this field, the submission is rejected
+### \*debug *&lt;truthy|falsy&gt;*
 
-### \*redirect
+If a truthy value, no email is sent and instead the content
+of the email is shown in the browser along with other useful
+information 
 
-The URL the submitter will be sent to after the form is
-submitted
+### \*formname *&lt;string&gt;*
 
-### \*replyto
+Helps organize and identify submissions when looking at stored
+submissions in the database
 
-All emails come from _webmaster@mercer.edu_, set this
-to an address to send responses somewhere else.
+### \*gotcha or \*honeypot *&lt;anything&gt;*
 
-### \*subject
+If any value, the submission is rejected
 
-The subject line of the email.
+### \*redirect *&lt;URL&gt;*
+
+Following a successful submission, the submitter will be sent
+to this URL
+
+### \*replyto *&lt;email address&gt;*
+
+All emails come from the PHP default, but replies will be sent
+to this address instead 
+
+### \*subject *&lt;string&gt;*
+
+The subject line of the email
 
 ## Recommendations
 
--   Do not use checkbox fields
+-   Do not use checkbox fields in your form
     -   Only values of ticked checkboxes are transmitted
+    -   Avoidance is the easiest mitigation
 
 ## Future Plans
 
--   New field `*honeypot_name`
-    -   The name of a field that causes a submission to
-        be rejected if filled.
+-   New field `*honeypotname`
+    -   The name of a field that is a honeypot
+    -   Submissions with values in that field are rejected
+-   New field `*from`
+    -   Set the from header
+    -   Currently the PHP default is used
