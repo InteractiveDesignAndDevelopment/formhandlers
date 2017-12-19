@@ -27,16 +27,16 @@
             (function() {
                 'use strict';
 
-                let action, form,
-                    configTo,
-                    configBcc, configCc, configDebug, configHoneypot, configRedirect, configReplyTo, configSubject,
-                    hiddenBcc, hiddenCc, hiddenDebug, hiddenHoneypot, hiddenRedirect, hiddenReplyTo, hiddenSubject;
+                let configBcc, configCc, configDebug, configFormName, configHoneypot, configRedirect, configReplyTo,
+                    configSubject, configTo,
+                    hiddenBcc, hiddenCc, hiddenDebug, hiddenFormName, hiddenHoneypot, hiddenRedirect, hiddenReplyTo,
+                    hiddenSubject, hiddenTo;
 
                 document.addEventListener('DOMContentLoaded', function() {
-                    action         = document.getElementById('action');
                     configBcc      = document.getElementById('config-bcc');
                     configCc       = document.getElementById('config-cc');
                     configDebug    = document.getElementById('config-debug');
+                    configFormName = document.getElementById('config-formname');
                     configHoneypot = document.getElementById('config-honeypot');
                     configRedirect = document.getElementById('config-redirect');
                     configReplyTo  = document.getElementById('config-replyto');
@@ -45,30 +45,27 @@
                     hiddenBcc      = document.getElementById('hidden-bcc');
                     hiddenCc       = document.getElementById('hidden-cc');
                     hiddenDebug    = document.getElementById('hidden-debug');
+                    hiddenFormName = document.getElementById('hidden-formname');
                     hiddenHoneypot = document.getElementById('hidden-honeypot');
                     hiddenRedirect = document.getElementById('hidden-redirect');
                     hiddenReplyTo  = document.getElementById('hidden-replyto');
                     hiddenSubject  = document.getElementById('hidden-subject');
-                    form           = document.getElementById('form');
+                    hiddenTo       = document.getElementById('hidden-to');
 
-                    configBcc.addEventListener(     ' keyup',  updateForm);
-                    configCc.addEventListener(      ' keyup',  updateForm);
-                    configDebug.addEventListener(    'change', updateForm);
-                    configHoneypot.addEventListener( 'keyup',  updateForm);
-                    configRedirect.addEventListener( 'keyup',  updateForm);
-                    configReplyTo.addEventListener(  'keyup',  updateForm);
-                    configSubject.addEventListener(  'keyup',  updateForm);
-                    configTo.addEventListener(       'keyup',  updateForm);
+                    configBcc.addEventListener(      'keyup'  , updateForm);
+                    configCc.addEventListener(       'keyup'  , updateForm);
+                    configDebug.addEventListener(    'change' , updateForm);
+                    configFormName.addEventListener( 'keyup'  , updateForm);
+                    configHoneypot.addEventListener( 'keyup'  , updateForm);
+                    configRedirect.addEventListener( 'keyup'  , updateForm);
+                    configReplyTo.addEventListener(  'keyup'  , updateForm);
+                    configSubject.addEventListener(  'keyup'  , updateForm);
+                    configTo.addEventListener(       'keyup'  , updateForm);
 
                     updateForm();
                 });
 
                 function updateForm() {
-                    let emailTo = configTo.value;
-                    let url = `/${emailTo}`;
-
-                    form.setAttribute('action', url);
-
                     if (null !== document.querySelector('#config-debug:checked')) {
                         hiddenDebug.value = 'true';
                     } else {
@@ -77,12 +74,12 @@
 
                     hiddenBcc.value      = configBcc.value;
                     hiddenCc.value       = configCc.value;
+                    hiddenFormName.value = configFormName.value;
                     hiddenHoneypot.value = configHoneypot.value;
                     hiddenRedirect.value = configRedirect.value;
                     hiddenReplyTo.value  = configReplyTo.value;
                     hiddenSubject.value  = configSubject.value;
-
-                    action.innerText = url;
+                    hiddenTo.value       = configTo.value;
                 }
             })();
 		</script>
@@ -122,7 +119,7 @@
                         <h3>Required</h3>
 
                         <div class="form-group">
-                            <label for="to">To</label>
+                            <label for="config-to">To</label>
                             <input class="form-control" id="config-to" type="email">
                         </div>
 
@@ -140,17 +137,17 @@
                         </p>
 
                         <div class="form-group">
-                            <label>Form Name</label>
+                            <label for="config-formname">Form Name</label>
                             <input class="form-control" id="config-formname" type="text">
                         </div>
 
                         <div class="form-group">
-                            <label>Subject</label>
+                            <label for="config-subject">Subject</label>
                             <input class="form-control" id="config-subject" type="text">
                         </div>
 
                         <div class="form-group">
-                            <label>Redirect</label>
+                            <label for="config-redirect">Redirect</label>
                             <input class="form-control" id="config-redirect" type="text">
                         </div>
 
@@ -163,17 +160,17 @@
                         </p>
 
                         <div class="form-group">
-                            <label>BCC</label>
+                            <label for="config-bcc">BCC</label>
                             <input class="form-control" id="config-bcc" type="email">
                         </div>
 
                         <div class="form-group">
-                            <label>CC</label>
+                            <label for="config-cc">CC</label>
                             <input class="form-control" id="config-cc" type="email">
                         </div>
 
                         <div class="form-group">
-                            <label>Reply To</label>
+                            <label for="config-replyto">Reply To</label>
                             <input class="form-control" id="config-replyto" type="email">
                         </div>
 
@@ -184,7 +181,7 @@
                         </p>
 
                         <div class="form-group">
-                            <label>Honeypot</label>
+                            <label for="config-honeypot">Honeypot</label>
                             <input class="form-control" id="config-honeypot" type="text">
                         </div>
 
@@ -200,7 +197,7 @@
                         Action: <span id="action" style="font-family: monospace"></span>
                     </div>
 
-                    <form action="" class="form-group" id="form" method="post">
+                    <form action="/" class="form-group" id="form" method="post">
 
                         <div class="form-group">
                             <label for="input-text-1">Input (Text) 1</label>
@@ -213,8 +210,8 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="">Select 1</label>
-                            <select class="form-control" name="select-1">
+                            <label for="select-1">Select 1</label>
+                            <select class="form-control" id="select-1" name="select-1">
                                 <option value=""></option>
                                 <option value="select-1-option-1-value">Option 1</option>
                                 <option value="select-1-option-2-value">Option 2</option>
@@ -292,6 +289,7 @@
                         <input type="hidden" name="*redirect" id="hidden-redirect" value="">
                         <input type="hidden" name="*replyto"  id="hidden-replyto"  value="">
                         <input type="hidden" name="*subject"  id="hidden-subject"  value="">
+                        <input type="hidden" name="*to"       id="hidden-to"       value="">
 
                     </form>
 

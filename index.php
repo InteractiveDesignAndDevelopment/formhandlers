@@ -20,22 +20,16 @@ $insecureDomains = ['formhandlers.test'];
 
 //var_dump($_SERVER);
 
+$headers = '';
+$body = '';
+
 if (isset($_POST['*debug'])) {
 	$debug = filter_var($_POST['*debug'], FILTER_VALIDATE_BOOLEAN);
+} else if (isset($_POST['_debug'])) {
+	$debug = filter_var($_POST['_debug'], FILTER_VALIDATE_BOOLEAN);
 } else {
 	$debug = false;
 }
-
-$explodedURI = explode('/', $_SERVER['REQUEST_URI']);
-
-//var_dump($explodedURI);
-
-if (2 == count($explodedURI)) {
-	$to = trim( $explodedURI[1] );
-}
-
-$headers = '';
-$body = '';
 
 if (isset($_POST['*bcc'])) {
 	$bcc = trim($_POST['*bcc']);
@@ -83,6 +77,27 @@ if (isset($_POST['*subject'])) {
 	$subject = trim( $_POST['_subject'] );
 }
 
+if (isset($_POST['*to'])) {
+	$to = trim($_POST['*to']);
+} else if (isset($_POST['_to'])) {
+	$to = trim($_POST['_to']);
+}
+
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- */
+
+//  _   _           _       _         ____        _        _
+// | | | |_ __   __| | __ _| |_ ___  |  _ \  __ _| |_ __ _| |__   __ _ ___  ___
+// | | | | '_ \ / _` |/ _` | __/ _ \ | | | |/ _` | __/ _` | '_ \ / _` / __|/ _ \
+// | |_| | |_) | (_| | (_| | ||  __/ | |_| | (_| | || (_| | |_) | (_| \__ \  __/
+//  \___/| .__/ \__,_|\__,_|\__\___| |____/ \__,_|\__\__,_|_.__/ \__,_|___/\___|
+//       |_|
+
+// Only requests sent with POST are considered submissions
+if ('POST' == $_SERVER['REQUEST_METHOD']) {
+	$submissionId = recordSubmission();
+	recordFields($submissionId);
+}
+
 /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- */
 
 // __     __    _ _     _       _   _
@@ -96,7 +111,7 @@ if (! isset($to) || 0 == strlen($to)) {
 	$errorCode = 'no-to';
 }
 
-if (! filter_var($to, FILTER_VALIDATE_EMAIL)) {
+if (isset($to) && ! filter_var($to, FILTER_VALIDATE_EMAIL)) {
 	$errorCode = 'to-invalid';
 }
 
@@ -112,6 +127,10 @@ if ('POST' != $_SERVER['REQUEST_METHOD']) {
 
 if (isset($honeypot) && 0 < strlen($honeypot)) {
 	$errorCode = 'honeypot';
+}
+
+if (isset($redirect) && 0 < strlen($redirect) && ! filter_var($redirect, FILTER_VALIDATE_URL)) {
+	$errorCode = 'redirect-invalid';
 }
 
 if (isset($errorCode) && 0 < strlen($errorCode)) {
@@ -186,7 +205,10 @@ if ($debug) {
 	$sent = mail($to, $subject, emailBody(), $headers);
 //	echo "${sent} = mail(${to}, ${subject}, ..., ${headers});";
 
-	if (! $sent) {
+	if ($sent) {
+		recordEmailStatus($submissionId, 1);
+	} else {
+		recordEmailStatus($submissionId, 0);
 		$redirect = '/error.php?error-code=not-sent';
 		if (isset($_SERVER['HTTP_REFERER'])) {
 			$redirect .= "&submission-referrer=${_SERVER['HTTP_REFERER']}";
@@ -195,18 +217,6 @@ if ($debug) {
 		die();
 	}
 }
-
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- */
-
-//  _   _           _       _         ____        _        _
-// | | | |_ __   __| | __ _| |_ ___  |  _ \  __ _| |_ __ _| |__   __ _ ___  ___
-// | | | | '_ \ / _` |/ _` | __/ _ \ | | | |/ _` | __/ _` | '_ \ / _` / __|/ _ \
-// | |_| | |_) | (_| | (_| | ||  __/ | |_| | (_| | || (_| | |_) | (_| \__ \  __/
-//  \___/| .__/ \__,_|\__,_|\__\___| |____/ \__,_|\__\__,_|_.__/ \__,_|___/\___|
-//       |_|
-
-$submissionId = recordSubmission();
-recordFields($submissionId);
 
 /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- */
 
@@ -387,7 +397,7 @@ function recordFields($submissionId) {
 			}
 
 			$query = <<< EOQUERY
-				INSERT INTO formhandlers.dbo.fields (
+				INSERT INTO fields (
 					submission_id,
 					name,
 					value
@@ -435,8 +445,8 @@ function recordSubmission() {
 		$debug = NULL;
 	}
 
-	if (isset($GLOBALS['form_name'])) {
-		$formName = $GLOBALS['form_name'];
+	if (isset($GLOBALS['formName'])) {
+		$formName = $GLOBALS['formName'];
 	} else {
 		$formName = NULL;
 	}
@@ -453,8 +463,8 @@ function recordSubmission() {
 		$redirect = NULL;
 	}
 
-	if (isset($GLOBALS['reply_to'])) {
-		$replyTo = $GLOBALS['reply_to'];
+	if (isset($GLOBALS['replyTo'])) {
+		$replyTo = $GLOBALS['replyTo'];
 	} else {
 		$replyTo = NULL;
 	}
@@ -478,10 +488,10 @@ function recordSubmission() {
 	}
 
 	$query = <<< EOQUERY
-		INSERT INTO formhandlers.dbo.submissions (
+		INSERT INTO submissions (
                 request_uri,
                 http_referer,
-                -- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                -- *~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*
                 bcc,
                 cc,
                 debug,
@@ -494,7 +504,7 @@ function recordSubmission() {
     	) VALUES (
                 ?,  -- request_uri
                 ?,  -- http_referer
-                -- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                -- *~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*
                 ?,  -- bcc
                 ?,  -- cc
                 ?,  -- debug
@@ -511,7 +521,7 @@ EOQUERY;
 	$params = array(
 		$_SERVER['REQUEST_URI'],
 	    $_SERVER['HTTP_REFERER'],
-		// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+		// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 		$bcc,
 		$cc,
 		$debug,
@@ -536,6 +546,31 @@ EOQUERY;
 	sqlsrv_close($conn);
 
 	return $submissionId;
+}
+
+function recordEmailStatus($submissionId, $emailStatus) {
+	$serverName = dbServerName();
+	$connectionInfo = array('Database'=>dbName());
+	$conn = sqlsrv_connect($serverName, $connectionInfo);
+	if ($conn === false) {
+		echo 'Unable to connect.</br>';
+		die(print_r(sqlsrv_errors(), true));
+	}
+
+	$query = <<< EOQUERY
+		UPDATE submissions
+		   SET email_status = ?
+		 WHERE id = ?;
+EOQUERY;
+
+	$params = array(
+		$emailStatus,
+		$submissionId
+	);
+
+	sqlsrv_query($conn, $query, $params);
+
+	sqlsrv_close($conn);
 }
 
 function responseSummary() {

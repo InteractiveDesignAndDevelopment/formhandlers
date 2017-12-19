@@ -40,6 +40,12 @@ case 'not-sent':
 			<p>The email was not sent.</p>
 EOD;
 		break;
+	case 'redirect-invalid':
+		$title = 'Invalid Redirect';
+		$description = <<<EOD
+			<p>The redirect URL is invalid.</p>
+EOD;
+		break;
 	case 'to-invalid':
 		$title = 'Probable Spam';
 		$description = <<<EOD
