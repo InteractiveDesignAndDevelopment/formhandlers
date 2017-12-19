@@ -52,7 +52,7 @@ If any value, the submission is rejected
 ### \*redirect *&lt;URL&gt;*
 
 Following a successful submission, the submitter will be sent
-to this URL. This must be an actual URL, not just something you _think_ is a URL, Elizabeth.
+to this URL. This must be an actual URL, not just something you _think_ is a URL, because it's run through `filter_var` with `FILTER_VALIDATE_URL`.
 
 ### \*replyto *&lt;email address&gt;*
 
