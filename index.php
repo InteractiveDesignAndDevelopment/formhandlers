@@ -623,8 +623,9 @@ function submissionDetails() {
 		$formValue = 'UNKNOWN FORM';
 	}
 
-	if (!empty($_SERVER['HTTP_REFERER'])) {
-		$formValue = "<a href='${formValue}'>${formValue}</a>";
+	if (isset($_SERVER['HTTP_REFERER']) && !empty($_SERVER['HTTP_REFERER'])) {
+		$referrer = $_SERVER['HTTP_REFERER'];
+		$formValue = "<a href='${referrer}'>${formValue}</a>";
 	}
 
 	$submittedValue = date('Y-m-d H:i:s');
