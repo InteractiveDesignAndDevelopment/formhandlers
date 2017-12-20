@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="32c23c36-33bc-4afe-92bf-37b629e1f644" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/index.php" afterPath="$PROJECT_DIR$/index.php" />
       <change beforePath="$PROJECT_DIR$/web.config" afterPath="$PROJECT_DIR$/web.config" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -68,11 +67,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="339">
-              <caret line="627" column="31" lean-forward="false" selection-start-line="627" selection-start-column="31" selection-end-line="627" selection-end-column="31" />
+              <caret line="627" column="62" lean-forward="true" selection-start-line="627" selection-start-column="62" selection-end-line="627" selection-end-column="62" />
               <folding>
                 <element signature="e#7#33#0#PHP" expanded="true" />
                 <marker date="1513788264562" expanded="true" signature="6722:6761" ph="..." />
@@ -190,11 +189,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="web.config" pinned="false" current-in-tab="false">
+      <file leaf-file-name="web.config" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/web.config">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="280">
-              <caret line="14" column="35" lean-forward="true" selection-start-line="14" selection-start-column="35" selection-end-line="14" selection-end-column="35" />
+            <state relative-caret-position="240">
+              <caret line="12" column="20" lean-forward="true" selection-start-line="12" selection-start-column="20" selection-end-line="12" selection-end-column="20" />
               <folding />
             </state>
           </provider>
@@ -292,8 +291,8 @@
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/test.php" />
         <option value="$PROJECT_DIR$/error.php" />
-        <option value="$PROJECT_DIR$/web.config" />
         <option value="$PROJECT_DIR$/index.php" />
+        <option value="$PROJECT_DIR$/web.config" />
       </list>
     </option>
   </component>
@@ -394,12 +393,12 @@
       <workItem from="1512570015284" duration="54000" />
       <workItem from="1512570084756" duration="67193000" />
       <workItem from="1513285277643" duration="14000" />
-      <workItem from="1513285311342" duration="20575000" />
+      <workItem from="1513285311342" duration="21112000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="143735000" />
+    <option name="totallyTimeSpent" value="144272000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1515,18 +1514,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web.config">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="280">
-          <caret line="14" column="35" lean-forward="true" selection-start-line="14" selection-start-column="35" selection-end-line="14" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/index.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="339">
-          <caret line="627" column="31" lean-forward="false" selection-start-line="627" selection-start-column="31" selection-end-line="627" selection-end-column="31" />
+          <caret line="627" column="62" lean-forward="true" selection-start-line="627" selection-start-column="62" selection-end-line="627" selection-end-column="62" />
           <folding>
             <element signature="e#7#33#0#PHP" expanded="true" />
             <marker date="1513788264562" expanded="true" signature="6722:6761" ph="..." />
@@ -1607,6 +1598,14 @@
             <marker date="1513788264562" expanded="false" signature="16283:16295" ph="..." />
             <marker date="1513788264562" expanded="false" signature="16308:16314" ph=" " />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web.config">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="12" column="20" lean-forward="true" selection-start-line="12" selection-start-column="20" selection-end-line="12" selection-end-column="20" />
+          <folding />
         </state>
       </provider>
     </entry>
