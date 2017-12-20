@@ -391,6 +391,7 @@ function recordFields($submissionId) {
 	}
 
 	if (isset($_POST)) {
+		$i = 0;
 		foreach ( $_POST as $inputName => $inputValue ) {
 			if ( '*' == substr( $inputName, 0, 1 ) ) {
 				continue;
@@ -399,10 +400,12 @@ function recordFields($submissionId) {
 			$query = <<< EOQUERY
 				INSERT INTO fields (
 					submission_id,
+					position,
 					name,
 					value
 				) VALUES (
 					?,  -- submission_id
+					?,  -- position
 					?,  -- name
 					?   -- value
 				);
@@ -410,6 +413,7 @@ EOQUERY;
 
 			$params = array(
 				$submissionId,
+				$i,
 				$inputName,
 				$inputValue
 			);
@@ -419,6 +423,7 @@ EOQUERY;
 				echo 'Error in executing query.</br>';
 				die(print_r(sqlsrv_errors(), true));
 			}
+			$i++;
 		}
 	}
 }
