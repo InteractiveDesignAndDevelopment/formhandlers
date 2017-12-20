@@ -20,7 +20,7 @@ EOD;
 	case 'no-to':
 		$title = '&ldquoto&rdquo; address missing';
 		$description = <<<EOD
-			<p>The URI should have a to address in it.</p>
+			<p>There should be an address to which form summaries are sent.</p>
 EOD;
 		break;
 	case 'not-https':
@@ -43,13 +43,13 @@ EOD;
 	case 'redirect-invalid':
 		$title = 'Invalid Redirect';
 		$description = <<<EOD
-			<p>The redirect URL is invalid.</p>
+			<p>The redirect URL is invalid. The redirect URL is validated using filter_var with FILTER_VALIDATE_URL.</p>
 EOD;
 		break;
 	case 'to-invalid':
 		$title = 'Probable Spam';
 		$description = <<<EOD
-			<p>Invalid &ldquo;to&rdquo; address.</p>
+			<p>Invalid to address. The to address is validated using filter_var with FILTER_VALIDATE_EMAIL.</p>
 EOD;
 		break;
 	default:
