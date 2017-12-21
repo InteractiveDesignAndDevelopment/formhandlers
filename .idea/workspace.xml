@@ -4,9 +4,7 @@
     <bookmark url="file://$PROJECT_DIR$/index.php" line="359" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="32c23c36-33bc-4afe-92bf-37b629e1f644" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/index.php" afterPath="$PROJECT_DIR$/index.php" />
-    </list>
+    <list default="true" id="32c23c36-33bc-4afe-92bf-37b629e1f644" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -313,11 +311,11 @@
     <servers />
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="1912" />
     <option name="y" value="-8" />
     <option name="width" value="1936" />
-    <option name="height" value="1176" />
+    <option name="height" value="1216" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -393,12 +391,12 @@
       <workItem from="1512570015284" duration="54000" />
       <workItem from="1512570084756" duration="67193000" />
       <workItem from="1513285277643" duration="14000" />
-      <workItem from="1513285311342" duration="21899000" />
+      <workItem from="1513285311342" duration="22497000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="145059000" />
+    <option name="totallyTimeSpent" value="145657000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -410,7 +408,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="1912" y="-8" width="1936" height="1176" extended-state="6" />
+    <frame x="1912" y="-8" width="1936" height="1176" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.13272922" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />

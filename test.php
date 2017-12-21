@@ -1,6 +1,6 @@
 <!doctype html>
 <html>
-	<head>
+  <head>
 
         <title>Test</title>
 
@@ -23,7 +23,7 @@
             integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
             crossorigin="anonymous"></script>
 
-		<script>
+    <script>
             (function() {
                 'use strict';
 
@@ -82,9 +82,9 @@
                     hiddenTo.value       = configTo.value;
                 }
             })();
-		</script>
-	</head>
-	<body>
+    </script>
+  </head>
+  <body>
 
         <div class="container-fluid">
 
@@ -142,13 +142,13 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="config-subject">Subject</label>
-                            <input class="form-control" id="config-subject" type="text">
+                            <label for="config-redirect">Redirect</label>
+                            <input class="form-control" id="config-redirect" type="text">
                         </div>
 
                         <div class="form-group">
-                            <label for="config-redirect">Redirect</label>
-                            <input class="form-control" id="config-redirect" type="text">
+                            <label for="config-subject">Subject</label>
+                            <input class="form-control" id="config-subject" type="text">
                         </div>
 
                         <hr>
@@ -298,5 +298,5 @@
             </div>
 
         </div>
-	</body>
+  </body>
 </html>
