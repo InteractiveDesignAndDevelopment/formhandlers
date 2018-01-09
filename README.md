@@ -63,6 +63,10 @@ to this address instead
 
 The subject line of the email
 
+### \*to *&lt;string&gt;*
+
+The address to which a form summary will be sent
+
 ## Recommendations
 
 -   Do not use checkbox fields in your form
