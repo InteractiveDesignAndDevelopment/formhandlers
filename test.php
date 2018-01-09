@@ -170,19 +170,17 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="config-replyto">Reply To</label>
-                            <input class="form-control" id="config-replyto" type="email">
+                            <label for="config-honeypot">Honeypot</label>
+                            <input class="form-control" id="config-honeypot" type="text">
                         </div>
 
-                        <h3>Forbidden</h3>
-
                         <p class="form-text text-muted">
-                            Only here for testing purposes; any values present will cause an error
+                            Any value in the honeypot field will cause an error.
                         </p>
 
                         <div class="form-group">
-                            <label for="config-honeypot">Honeypot</label>
-                            <input class="form-control" id="config-honeypot" type="text">
+                            <label for="config-replyto">Reply To</label>
+                            <input class="form-control" id="config-replyto" type="email">
                         </div>
 
                     </form>
@@ -281,15 +279,20 @@
                             <input class="btn btn-primary" type="submit" value="Submit">
                         </div>
 
+                        <!-- Testing -->
+                        <input type="hidden" name="*debug"    id="hidden-debug"    value="">
+                        <!-- Required -->
+                        <input type="hidden" name="*to"       id="hidden-to"       value="">
+                        <!-- Recommended -->
+                        <input type="hidden" name="*formname" id="hidden-formname" value="">
+                        <input type="hidden" name="*redirect" id="hidden-redirect" value="">
+                        <input type="hidden" name="*subject"  id="hidden-subject"  value="">
+                        <!-- Situational -->
                         <input type="hidden" name="*bcc"      id="hidden-bcc"      value="">
                         <input type="hidden" name="*cc"       id="hidden-cc"       value="">
-                        <input type="hidden" name="*debug"    id="hidden-debug"    value="">
-                        <input type="hidden" name="*formname" id="hidden-formname" value="">
                         <input type="hidden" name="*honeypot" id="hidden-honeypot" value="">
-                        <input type="hidden" name="*redirect" id="hidden-redirect" value="">
                         <input type="hidden" name="*replyto"  id="hidden-replyto"  value="">
-                        <input type="hidden" name="*subject"  id="hidden-subject"  value="">
-                        <input type="hidden" name="*to"       id="hidden-to"       value="">
+
 
                     </form>
 
