@@ -2,7 +2,7 @@
 <project version="4">
   <component name="dataSourceStorageLocal">
     <data-source name="formhandlers@localhost" uuid="38fca4a7-2104-4041-8681-1d5d253c8edd">
-      <database-info product="Microsoft SQL Server" version="12.00.2000" jdbc-version="4.2" driver-name="Microsoft JDBC Driver 6.0 for SQL Server" driver-version="6.0.8112.100">
+      <database-info product="Microsoft SQL Server" version="12.00.2000" jdbc-version="4.2" driver-name="Microsoft JDBC Driver 6.0 for SQL Server" driver-version="6.0.8112.100" family="MSSQL" exact-version="12.0.2000">
         <extra-name-characters>$#@</extra-name-characters>
         <identifier-quote-string>&quot;</identifier-quote-string>
       </database-info>
